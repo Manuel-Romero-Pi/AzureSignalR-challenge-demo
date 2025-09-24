@@ -1,0 +1,25 @@
+# Carpetas generadas por el build
+bin/
+obj/
+
+# Configuración del editor
+.vscode/
+
+# Archivos de usuario de Visual Studio / VS Code
+*.user
+*.suo
+
+# Archivos de publicación / deployment
+*.pubxml
+*.publishproj
+
+# Archivos temporales de logs
+*.log
+
+# Archivos de configuración con datos sensibles
+appsettings.json
+appsettings.*.json
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
