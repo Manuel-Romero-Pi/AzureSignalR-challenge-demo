@@ -14,7 +14,10 @@ namespace AIStreaming
                 .AddSingleton<OpenAIClient>(provider =>
                 {
                     var options = provider.GetRequiredService<IOptions<OpenAIOptions>>().Value;
-                    return new AzureOpenAIClient(new Uri(options.Endpoint), new ApiKeyCredential(options.Key));
+                    return new AzureOpenAIClient(
+                        new Uri(options.Endpoint ?? throw new InvalidOperationException("OpenAI Endpoint is required")), 
+                        new ApiKeyCredential(options.Key ?? throw new InvalidOperationException("OpenAI Key is required"))
+                    );
                 });
         }
 
@@ -25,7 +28,7 @@ namespace AIStreaming
                 .AddSingleton<OpenAIClient>(provider =>
                 {
                     var options = provider.GetRequiredService<IOptions<OpenAIOptions>>().Value;
-                    return new OpenAIClient(new ApiKeyCredential(options.Key));
+                    return new OpenAIClient(new ApiKeyCredential(options.Key ?? throw new InvalidOperationException("OpenAI Key is required")));
                 });
         }
     }

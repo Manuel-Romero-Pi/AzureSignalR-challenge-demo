@@ -43,7 +43,7 @@ namespace AIStreaming.Hubs
             {
                 var id = Guid.NewGuid().ToString();
                 var actualMessage = message.Substring(4).Trim();
-                var messagesIncludeHistory = _history.GetOrAddGroupHistory(groupName, userName, actualMessage);
+                var messagesIncludeHistory = _history.GetOrAddGroupHistory(groupName ?? throw new InvalidOperationException("Group name is required"), userName, actualMessage);
                 await Clients.OthersInGroup(groupName).SendAsync("NewMessage", userName, message);
 
                 var chatClient = _openAI.GetChatClient(_options.Model);
@@ -66,7 +66,7 @@ namespace AIStreaming.Hubs
             }
             else
             {
-                _history.GetOrAddGroupHistory(groupName, userName, message);
+                _history.GetOrAddGroupHistory(groupName ?? throw new InvalidOperationException("Group name is required"), userName, message);
                 await Clients.OthersInGroup(groupName).SendAsync("NewMessage", userName, message);
             }
         }
