@@ -44,30 +44,27 @@ namespace AIStreaming.Hubs
                 var id = Guid.NewGuid().ToString();
                 var actualMessage = message.Substring(4).Trim();
                 var messagesIncludeHistory = _history.GetOrAddGroupHistory(groupName ?? throw new InvalidOperationException("Group name is required"), userName, actualMessage);
-                await Clients.OthersInGroup(groupName).SendAsync("NewMessage", userName, message);
+                await Clients.OthersInGroup(groupName).SendAsync("newMessage", userName, message);
 
                 var chatClient = _openAI.GetChatClient(_options.Model);
                 var totalCompletion = new StringBuilder();
-                var lastSentTokenLength = 0;
+                
                 await foreach (var completion in chatClient.CompleteChatStreamingAsync(messagesIncludeHistory))
                 {
                     foreach (var content in completion.ContentUpdate)
                     {
                         totalCompletion.Append(content);
-                        if (totalCompletion.Length - lastSentTokenLength > 20)
-                        {
-                            await Clients.Group(groupName).SendAsync("newMessageWithId", "ChatGPT", id, totalCompletion.ToString());
-                            lastSentTokenLength = totalCompletion.Length;
-                        }
                     }
                 }
-                _history.UpdateGroupHistoryForAssistant(groupName, totalCompletion.ToString());
+                
+                // Send complete message for typewriter effect
                 await Clients.Group(groupName).SendAsync("newMessageWithId", "ChatGPT", id, totalCompletion.ToString());
+                _history.UpdateGroupHistoryForAssistant(groupName, totalCompletion.ToString());
             }
             else
             {
                 _history.GetOrAddGroupHistory(groupName ?? throw new InvalidOperationException("Group name is required"), userName, message);
-                await Clients.OthersInGroup(groupName).SendAsync("NewMessage", userName, message);
+                await Clients.OthersInGroup(groupName).SendAsync("newMessage", userName, message);
             }
         }
     }
