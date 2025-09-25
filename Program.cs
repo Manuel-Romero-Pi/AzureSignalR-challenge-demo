@@ -4,6 +4,16 @@ using AIStreaming.Hubs;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
+
 builder.Services.AddSignalR().AddAzureSignalR();
 builder.Services.AddSingleton<GroupAccessor>()
     .AddSingleton<GroupHistoryStore>()
@@ -11,6 +21,7 @@ builder.Services.AddSingleton<GroupAccessor>()
 
 var app = builder.Build();
 
+app.UseCors();
 app.UseHttpsRedirection();
 app.UseDefaultFiles();
 app.UseStaticFiles();
