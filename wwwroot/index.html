@@ -10,29 +10,29 @@
     <!-- Prompt for User Name -->
     <div id="namePrompt" class="modal">
         <div class="modal-content">
-            <h2>Welcome!</h2>
-            <p>Please enter your name:</p>
-            <input type="text" id="userName" placeholder="Your Name">
-            <button onclick="submitName()">Continue</button>
+            <h2>Bienvenido!</h2>
+            <p>Ingresá tu nombre por favor:</p>
+            <input type="text" id="userName" placeholder="Tu nombre">
+            <button onclick="submitName()">Continuar</button>
         </div>
     </div>
 
     <!-- Group Selection Page -->
     <div id="groupSelection" class="hidden modal">
         <div class="modal-content">
-            <h2>Welcome, <span id="userNameDisplay"></span>!</h2>
-            <h3>Join or Create a Chat Group</h3>
-            <button onclick="createGroup()">Create New Chat Group</button>
-            <p>OR</p>
-            <input type="text" id="groupName" placeholder="Enter Group Name">
-            <button onclick="joinGroup()">Join Chat Group</button>
+            <h2>Bienvenido, <span id="userNameDisplay"></span>!</h2>
+            <h3>Unite o Crea un Grupo</h3>
+            <button onclick="createGroup()">Crear Nuevo Grupo</button>
+            <p>O</p>
+            <input type="text" id="groupName" placeholder="Ingresá el nombre del grupo">
+            <button onclick="joinGroup()">Unirse a un Nuevo Grupo</button>
         </div>
     </div>
 
     <!-- Chat Page -->
     <div id="chatPage" class="chat-container hidden">
         <header>
-            <h2 id="chatGroupName">Group Chat</h2>
+            <h2 id="chatGroupName">Chat de Grupo</h2>
             <div class="user-info">
                 <span id="connectionStatus" class="status-disconnected"></span>
             </div>
@@ -40,10 +40,10 @@
         <div id="chatMessages" class="chat-messages"></div>
         <div class="chat-input">
             <div class="input-container">
-                <input type="text" id="chatInput" placeholder="Type your message here... Use @gpt to involve in a chatgpt robot">
+                <input type="text" id="chatInput" placeholder="Escribí tu mensaje acá... Usá @gpt para escribirle a ChatGPT">
                 <div id="inputPreview" class="input-preview"></div>
             </div>
-            <button onclick="sendMessage()">Send</button>
+            <button onclick="sendMessage()">Enviar</button>
         </div>
     </div>
 
